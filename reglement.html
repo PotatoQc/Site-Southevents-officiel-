@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Règlements — SOUTHEVENTS</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* ─── PAGE RÈGLEMENTS ─── */
+    .rules-page {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 8rem 2rem 5rem;
+    }
+
+    .rules-container {
+      width: 100%;
+      max-width: 720px;
+    }
+
+    .rules-logo {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 3.5rem;
+    }
+    .rules-logo img {
+      height: 40px;
+      filter: invert(1) brightness(0.9);
+    }
+    .rules-logo span {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--white-dim);
+    }
+
+    .rules-tag {
+      display: inline-block;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.58rem;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: var(--white-dim);
+      border: 1px solid var(--border-mid);
+      padding: 0.3rem 1rem;
+      margin-bottom: 1.2rem;
+    }
+
+    .rules-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(2.8rem, 7vw, 5.5rem);
+      line-height: 0.95;
+      letter-spacing: 0.04em;
+      margin-bottom: 2.5rem;
+      color: var(--white);
+    }
+
+    .rules-divider {
+      width: 100%;
+      height: 1px;
+      background: var(--border-mid);
+      margin-bottom: 2.5rem;
+    }
+
+    .rules-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      margin-bottom: 3rem;
+    }
+
+    .rules-list li {
+      display: flex;
+      gap: 1.5rem;
+      align-items: flex-start;
+      padding: 1.3rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .rules-list li:first-child {
+      border-top: 1px solid var(--border);
+    }
+
+    .rule-num {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.6rem;
+      color: var(--white-dim);
+      letter-spacing: 0.15em;
+      min-width: 2.5rem;
+      padding-top: 0.15rem;
+      flex-shrink: 0;
+    }
+
+    .rule-text {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.95rem;
+      line-height: 1.75;
+      color: var(--white);
+      font-weight: 400;
+    }
+
+    .rule-text strong {
+      font-weight: 700;
+      color: var(--white);
+    }
+
+    /* Checkbox d'acceptation */
+    .rules-accept-zone {
+      background: var(--bg3);
+      border: 1px solid var(--border-mid);
+      padding: 1.8rem 2rem;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: flex-start;
+      gap: 1.2rem;
+      cursor: pointer;
+      transition: border-color 0.2s;
+    }
+    .rules-accept-zone:hover { border-color: rgba(245,242,236,0.4); }
+
+    .rules-checkbox {
+      width: 20px; height: 20px;
+      border: 2px solid var(--border-mid);
+      flex-shrink: 0;
+      margin-top: 0.15rem;
+      display: flex; align-items: center; justify-content: center;
+      transition: border-color 0.2s, background 0.2s;
+      cursor: pointer;
+    }
+    .rules-checkbox.checked {
+      background: var(--white);
+      border-color: var(--white);
+    }
+    .rules-checkbox svg { display: none; }
+    .rules-checkbox.checked svg { display: block; }
+
+    .rules-accept-text {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.9rem;
+      line-height: 1.6;
+      color: var(--white);
+    }
+    .rules-accept-text small {
+      display: block;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.6rem;
+      color: var(--white-dim);
+      letter-spacing: 0.08em;
+      margin-top: 0.3rem;
+    }
+
+    /* Bouton principal */
+    .btn-ticket {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.8rem;
+      width: 100%;
+      padding: 1.2rem 2rem;
+      background: var(--white);
+      color: var(--bg);
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      border: none;
+      cursor: pointer;
+      transition: opacity 0.2s, transform 0.15s;
+      text-decoration: none;
+    }
+    .btn-ticket:disabled,
+    .btn-ticket.disabled {
+      opacity: 0.25;
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+    .btn-ticket:not(.disabled):hover {
+      opacity: 0.88;
+      transform: translateY(-1px);
+    }
+
+    .rules-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-top: 2rem;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--white-dim);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .rules-back:hover { color: var(--white); }
+  </style>
+</head>
+<body>
+
+  <div class="cursor"      id="cursor"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
+
+  <div class="rules-page">
+    <div class="rules-container">
+
+      <!-- Logo -->
+      <div class="rules-logo">
+        <img src="logo.png" alt="SE" />
+        <span>Southevents</span>
+      </div>
+
+      <div class="rules-tag">Avant d'obtenir votre billet</div>
+      <h1 class="rules-title">RÈGLEMENTS<br>DE L'ÉVÉNEMENT</h1>
+      <div class="rules-divider"></div>
+
+      <!-- Liste des règlements -->
+      <ul class="rules-list">
+        <li>
+          <span class="rule-num">01</span>
+          <span class="rule-text">
+            <strong>Âge minimum requis.</strong> L'accès à l'événement est réservé aux personnes âgées de 18 ans et plus. Une pièce d'identité valide avec photo sera exigée à l'entrée.
+          </span>
+        </li>
+        <li>
+          <span class="rule-num">02</span>
+          <span class="rule-text">
+            <strong>Billet nominatif et non transférable.</strong> Votre billet est émis à votre nom. Il ne peut être cédé, revendu ou transféré à une autre personne.
+          </span>
+        </li>
+        <li>
+          <span class="rule-num">03</span>
+          <span class="rule-text">
+            <strong>Présentation obligatoire du billet.</strong> Votre billet (numérique ou imprimé) ainsi qu'une pièce d'identité devront être présentés à l'entrée. Aucune exception ne sera acceptée.
+          </span>
+        </li>
+        <li>
+          <span class="rule-num">04</span>
+          <span class="rule-text">
+            <strong>Comportement respectueux.</strong> Tout comportement agressif, irrespectueux ou perturbateur entraînera une expulsion immédiate sans remboursement.
+          </span>
+        </li>
+        <li>
+          <span class="rule-num">05</span>
+          <span class="rule-text">
+            <strong>Consommation responsable.</strong> La consommation d'alcool est permise pour les personnes majeures. Toute personne en état d'ivresse manifeste se verra refuser l'accès ou sera exclue de l'événement.
+          </span>
+        </li>
+        <li>
+          <span class="rule-num">06</span>
+          <span class="rule-text">
+            <strong>Drogues et substances illicites.</strong> La possession ou consommation de substances illicites est strictement interdite et pourra faire l'objet d'un signalement aux autorités.
+          </span>
+        </li>
+        <li>
+          <span class="rule-num">07</span>
+          <span class="rule-text">
+            <strong>Droit à l'image.</strong> Des photos et vidéos seront captées lors de l'événement à des fins promotionnelles. En achetant votre billet, vous consentez à ce que votre image soit utilisée par Southevents.
+          </span>
+        </li>
+        <li>
+          <span class="rule-num">08</span>
+          <span class="rule-text">
+            <strong>Non-remboursable.</strong> Les billets ne sont pas remboursables, sauf en cas d'annulation officielle de l'événement par les organisateurs.
+          </span>
+        </li>
+        <li>
+          <span class="rule-num">09</span>
+          <span class="rule-text">
+            <strong>Sécurité et fouille.</strong> Une vérification à l'entrée peut être effectuée. Tout objet dangereux ou interdit sera confisqué.
+          </span>
+        </li>
+        <li>
+          <span class="rule-num">10</span>
+          <span class="rule-text">
+            <strong>Décision finale des organisateurs.</strong> Les organisateurs de Southevents se réservent le droit de refuser l'accès à toute personne ne respectant pas les présents règlements, sans devoir se justifier.
+          </span>
+        </li>
+      </ul>
+
+      <!-- Zone acceptation -->
+      <div class="rules-accept-zone" id="acceptZone" onclick="toggleAccept()">
+        <div class="rules-checkbox" id="checkbox">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#0e0e0e" stroke-width="3">
+            <polyline points="20,6 9,17 4,12"/>
+          </svg>
+        </div>
+        <div class="rules-accept-text">
+          J'ai lu et j'accepte l'ensemble des règlements de l'événement Southevents.
+          <small>Requis pour procéder à l'achat de votre billet</small>
+        </div>
+      </div>
+
+      <!-- Bouton billet -->
+      <a
+        href="https://billet.southevents.ca"
+        class="btn-ticket disabled"
+        id="billetBtn"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        J'accepte les règlements — Obtenir mon billet
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="5" y1="12" x2="19" y2="12"/>
+          <polyline points="12,5 19,12 12,19"/>
+        </svg>
+      </a>
+
+      <a href="index.html" class="rules-back">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="19" y1="12" x2="5" y2="12"/>
+          <polyline points="12,19 5,12 12,5"/>
+        </svg>
+        Retour à l'accueil
+      </a>
+
+    </div>
+  </div>
+
+  <script>
+    // ─── CURSOR ───
+    const cursor     = document.getElementById('cursor');
+    const cursorRing = document.getElementById('cursorRing');
+    let mx = 0, my = 0, rx = 0, ry = 0;
+    document.addEventListener('mousemove', e => {
+      mx = e.clientX; my = e.clientY;
+      cursor.style.transform = `translate(${mx - 4}px, ${my - 4}px)`;
+    });
+    (function loop() {
+      rx += (mx - rx) * 0.1;
+      ry += (my - ry) * 0.1;
+      cursorRing.style.transform = `translate(${rx - 16}px, ${ry - 16}px)`;
+      requestAnimationFrame(loop);
+    })();
+
+    // ─── ACCEPT TOGGLE ───
+    let accepted = false;
+
+    function toggleAccept() {
+      accepted = !accepted;
+      document.getElementById('checkbox').classList.toggle('checked', accepted);
+      const btn = document.getElementById('billetBtn');
+      btn.classList.toggle('disabled', !accepted);
+    }
+  </script>
+</body>
+</html>

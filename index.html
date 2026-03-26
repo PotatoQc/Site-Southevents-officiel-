@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SOUTHEVENTS</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- CURSEUR CUSTOM -->
+  <div class="cursor"     id="cursor"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
+
+  <!-- ─── NAV ─── -->
+  <nav>
+    <a href="#" class="nav-logo">
+      <img src="logo.png" alt="SE Logo" />
+      <span class="nav-logo-text">Southevents</span>
+    </a>
+    <ul>
+      <li><a href="#countdown">Prochain</a></li>
+      <li><a href="#videos">Vidéos</a></li>
+      <li><a href="reglement.html" class="nav-ticket">Obtenir son billet</a></li>
+    </ul>
+  </nav>
+
+  <!-- ─── HERO ─── -->
+  <section id="hero">
+    <!-- Vidéo de fond -->
+   <!-- Effets de fond (actifs si pas de vidéo) -->
+<div class="hero-bg"></div>
+<div class="hero-scanlines"></div>
+<div class="hero-grid"></div>
+<img src="logo.png" alt="" class="hero-logo-center" aria-hidden="true" />
+
+<!-- Vidéo de fond — DOIT être ici, après les effets -->
+<div class="hero-video-wrap">
+  <video class="hero-video" autoplay muted loop playsinline>
+    <source src="intro.mp4" type="video/mp4" />
+  </video>
+  <div class="hero-video-overlay"></div>
+</div>
+
+<!-- Particules animées -->
+<canvas id="particles" class="hero-particles"></canvas>
+
+
+    <!-- Contenu -->
+    <div class="hero-content">
+      <div class="hero-eyebrow">
+        <span class="eyebrow-dot"></span>
+        // ESTD. 2025 — MAKE IT MEMORABLE
+      </div>
+      <h1 class="hero-title">
+        <span class="glitch-word">SOUTH</span><br>
+        <span class="glitch-word dim">EVENTS</span>
+      </h1>
+        <p class="hero-sub">
+          On crée pas juste des événements<br>
+          On crée des nuits dont tu ne va jamais oublier
+        </p>
+      <div class="hero-actions">
+        <a href="#countdown" class="hero-cta">
+          Prochain événement
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="5" y1="12" x2="19" y2="12"/>
+            <polyline points="12,5 19,12 12,19"/>
+          </svg>
+        </a>
+        <a href="reglement.html" class="hero-cta hero-cta--filled">
+          Obtenir son billet
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="2" y="9" width="20" height="13" rx="1"/>
+            <path d="M16 2v4M8 2v4M2 13h20"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+
+    <!-- Scroll indicator -->
+    <div class="scroll-hint">
+      <div class="scroll-line"></div>
+      <span>Scroll</span>
+    </div>
+  </section>
+
+  <!-- ─── STATS BANDE ─── -->
+  <div class="stats-bar">
+    <div class="stats-bar-inner">
+      <div class="stat-item">
+        <span class="stat-num" data-target="4">0</span>
+        <span class="stat-label">Événements</span>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <span class="stat-num" data-target="1000">0</span>
+        <span class="stat-label">Participants</span>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <div class="stat-num-wrap" style="display:flex; align-items:baseline; gap:0.1em;">
+          <span class="stat-num" data-target="100">100</span>
+          <span class="stat-suffix">%</span>
+        </div>
+        <span class="stat-label">Inoubliables</span>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <span class="stat-num" data-target="2025">2025</span>
+        <span class="stat-label">ESTD</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── COUNTDOWN ─── -->
+  <section id="countdown">
+    <!-- Tag au-dessus du nom -->
+    <div class="next-event-tag">Prochain événement</div>
+    <div class="next-event-name glitch" id="eventName" data-text="SUMMER BASH 2025">
+      TRHOW BACK 2010
+    </div>
+    <div class="next-event-date" id="eventDateDisplay">Date à définir</div>
+
+    <div class="countdown-grid">
+      <div class="countdown-unit">
+        <div class="countdown-number" id="days">--</div>
+        <div class="countdown-label">Jours</div>
+      </div>
+      <div class="countdown-sep">:</div>
+      <div class="countdown-unit">
+        <div class="countdown-number" id="hours">--</div>
+        <div class="countdown-label">Heures</div>
+      </div>
+      <div class="countdown-sep">:</div>
+      <div class="countdown-unit">
+        <div class="countdown-number" id="minutes">--</div>
+        <div class="countdown-label">Minutes</div>
+      </div>
+      <div class="countdown-sep">:</div>
+      <div class="countdown-unit">
+        <div class="countdown-number" id="seconds">--</div>
+        <div class="countdown-label">Secondes</div>
+      </div>
+    </div>
+
+    <div class="countdown-cta-wrap">
+      <a href="reglement.html" class="hero-cta hero-cta--filled">
+        Obtenir son billet
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="2" y="9" width="20" height="13" rx="1"/>
+          <path d="M16 2v4M8 2v4M2 13h20"/>
+        </svg>
+      </a>
+    </div>
+  </section>
+
+  <!-- ─── VIBES MARQUEE ─── -->
+  <div class="marquee-wrap" aria-hidden="true">
+    <div class="marquee-track">
+      <span>SOUTHEVENTS</span><span class="mx">✦</span>
+      <span>BONNE AMBIANCE</span><span class="mx">✦</span>
+      <span>MUSIQUE</span><span class="mx">✦</span>
+      <span>ENTRE AMIS</span><span class="mx">✦</span>
+      <span>ESTD 2025</span><span class="mx">✦</span>
+      <span>SOUTHEVENTS</span><span class="mx">✦</span>
+      <span>BONNE AMBIANCE</span><span class="mx">✦</span>
+      <span>MUSIQUE</span><span class="mx">✦</span>
+      <span>ENTRE AMIS</span><span class="mx">✦</span>
+      <span>ESTD 2025</span><span class="mx">✦</span>
+      <!-- Dupliqué pour l'effet infini -->
+      <span>SOUTHEVENTS</span><span class="mx">✦</span>
+      <span>BONNE AMBIANCE</span><span class="mx">✦</span>
+      <span>MUSIQUE</span><span class="mx">✦</span>
+      <span>ENTRE AMIS</span><span class="mx">✦</span>
+      <span>ESTD 2025</span><span class="mx">✦</span>
+      <span>SOUTHEVENTS</span><span class="mx">✦</span>
+      <span>BONNE AMBIANCE</span><span class="mx">✦</span>
+      <span>MUSIQUE</span><span class="mx">✦</span>
+      <span>ENTRE AMIS</span><span class="mx">✦</span>
+      <span>ESTD 2025</span><span class="mx">✦</span>
+    </div>
+  </div>
+
+  <!-- ─── VIDÉOS ─── -->
+  <section id="videos">
+    <div class="section-label">Archives</div>
+    <h2 class="section-title">NOS ANCIENS<br>ÉVÈNEMENTS</h2>
+    <div class="section-divider"></div>
+    <div class="video-grid" id="videoGrid"></div>
+  </section>
+
+  <!-- ─── FOOTER ─── -->
+  <footer>
+    <div class="footer-brand">
+      <img src="logo.png" alt="SE" />
+      <span class="footer-brand-name">Southevents</span>
+    </div>
+    <p>© 2025 SOUTHEVENTS — Tous droits réservés</p>
+  </footer>
+
+  <script src="main.js"></script>
+</body>
+</html>
