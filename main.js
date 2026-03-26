@@ -189,22 +189,23 @@ function renderVideos() {
       </div>`
   }).join('')
 
-  // Gestion hover sur les vidéos
-  grid.querySelectorAll('.video-card').forEach(card => {
-    const vid = card.querySelector('.card-preview-video')
-    if (!vid) return
-    card.addEventListener('mouseenter', () => vid.play())
-    card.addEventListener('mouseleave', () => {
-      vid.pause()
-      vid.currentTime = 0
-    })
+// Gestion hover sur les vidéos
+grid.querySelectorAll('.video-card').forEach(card => {
+  const vid = card.querySelector('.card-preview-video')
+  if (!vid) return
+
+  // Desktop — hover souris
+  card.addEventListener('mouseenter', () => vid.play())
+  card.addEventListener('mouseleave', () => {
+    vid.pause()
+    vid.currentTime = 0
   })
 
-  requestAnimationFrame(() => {
-    grid.querySelectorAll('.fade-up').forEach((el, i) =>
-      setTimeout(() => el.classList.add('visible'), i * 120))
-  })
-}
+  // Mobile — autoplay direct sans hover
+  if (isTouchDevice()) {
+    vid.play()
+  }
+})
 
 
 
