@@ -120,7 +120,7 @@ updateCountdown()
 
 // ─── VIDEO GALLERY ────────────────────────────
 let videos = [
-  { title: 'ThrowBack 2016', date: '6 Mars 2026', igUrl: 'https://www.instagram.com/reel/DVq2r23jUnn/', preview: 'intro.mp4' },
+  { title: 'ThrowBack 2016', date: '6 Mars 2026', igUrl: 'https://www.instagram.com/reel/DVq2r23jUnn/', preview: 'tb2016.mp4' },
 ]
 
 function renderVideos() {
