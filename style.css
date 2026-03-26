@@ -845,3 +845,9 @@ footer p {
 .video-card:hover .ig-overlay {
   opacity: 1;
 }
+
+@media (hover: none) {
+  body {
+    cursor: auto; /* ← remet le curseur normal sur mobile */
+  }
+}

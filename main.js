@@ -3,22 +3,32 @@
    ═══════════════════════════════════════════════ */
 
 // ─── CURSOR ───────────────────────────────────
-const cursor     = document.getElementById('cursor');
-const cursorRing = document.getElementById('cursorRing');
-let mx = 0, my = 0, rx = 0, ry = 0;
+const cursor = document.getElementById('cursor')
+const cursorRing = document.getElementById('cursorRing')
+let mx = 0, my = 0, rx = 0, ry = 0
 
-document.addEventListener('mousemove', e => {
-  mx = e.clientX;
-  my = e.clientY;
-  cursor.style.transform = `translate(${mx - 4}px, ${my - 4}px)`;
-});
+// Détecte si l'appareil est tactile
+const isTouchDevice = () => window.matchMedia('(hover: none)').matches
 
-(function animateRing() {
-  rx += (mx - rx) * 0.1;
-  ry += (my - ry) * 0.1;
-  cursorRing.style.transform = `translate(${rx - 16}px, ${ry - 16}px)`;
-  requestAnimationFrame(animateRing);
-})();
+if (isTouchDevice()) {
+  // Cache le curseur sur mobile
+  cursor.style.display = 'none'
+  cursorRing.style.display = 'none'
+} else {
+  document.addEventListener('mousemove', e => {
+    mx = e.clientX
+    my = e.clientY
+    cursor.style.transform = `translate(${mx - 4}px, ${my - 4}px)`
+  })
+
+  function animateRing() {
+    rx += (mx - rx) * 0.1
+    ry += (my - ry) * 0.1
+    cursorRing.style.transform = `translate(${rx - 16}px, ${ry - 16}px)`
+    requestAnimationFrame(animateRing)
+  }
+  animateRing()
+}
 
 
 // ─── PARTICLES ────────────────────────────────
