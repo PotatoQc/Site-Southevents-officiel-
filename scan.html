@@ -3,108 +3,119 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Scanner Billet - Southevents</title>
+  <title>Scanner - Southevents</title>
+  <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { 
+    body {
+      background: #0e0e0e;
+      color: #f5f2ec;
       font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-      background: linear-gradient(135deg, #000 0%, #111 100%);
-      color: #f5f2ec; 
-      min-height: 100vh; 
-      display: flex; 
-      flex-direction: column; 
-      align-items: center; 
-      justify-content: center; 
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
       padding: 20px;
     }
-    .scanner-container { 
-      background: rgba(20,20,20,0.9); 
-      border-radius: 20px; 
-      padding: 30px; 
-      box-shadow: 0 20px 40px rgba(0,0,0,0.5);
-      text-align: center;
-      max-width: 400px;
+    .card {
+      background: #1a1a1a;
+      border-radius: 20px;
+      padding: 30px;
       width: 100%;
+      max-width: 400px;
+      text-align: center;
     }
-    video { 
-      width: 100%; 
-      max-width: 300px; 
-      height: 300px; 
-      border-radius: 15px; 
-      border: 3px solid #f5f2ec;
-      object-fit: cover;
-    }
-    #result { 
-      margin-top: 20px; 
-      font-size: 24px; 
+    h1 { font-size: 22px; margin-bottom: 6px; }
+    .subtitle { color: #888; font-size: 14px; margin-bottom: 24px; }
+    #reader { width: 100%; border-radius: 12px; overflow: hidden; }
+    #result {
+      margin-top: 20px;
+      padding: 16px;
+      border-radius: 12px;
+      font-size: 18px;
       font-weight: bold;
-      min-height: 30px;
+      display: none;
     }
-    .valid { color: #4ade80; }
-    .invalid { color: #ef4444; }
-    .loading { color: #f5f2ec; }
-    h1 { 
-      font-size: 28px; 
-      margin-bottom: 10px; 
-      font-weight: 700;
-    }
-    .subtitle { 
-      color: #9ca3af; 
-      margin-bottom: 30px; 
-      font-size: 16px;
-    }
-    button { 
-      background: #f5f2ec; 
-      color: #000; 
-      border: none; 
-      padding: 12px 24px; 
-      border-radius: 25px; 
-      font-size: 16px; 
+    .valid { background: #052e16; color: #4ade80; }
+    .invalid { background: #2d0000; color: #ef4444; }
+    .ticket-id { font-size: 14px; font-weight: normal; margin-top: 6px; color: #aaa; }
+    button {
+      margin-top: 20px;
+      background: #f5f2ec;
+      color: #000;
+      border: none;
+      padding: 12px 30px;
+      border-radius: 25px;
+      font-size: 15px;
       font-weight: 600;
       cursor: pointer;
-      margin-top: 20px;
+      display: none;
     }
   </style>
 </head>
 <body>
-  <div class="scanner-container">
+  <div class="card">
     <h1>🔍 Scanner Billet</h1>
-    <p class="subtitle">Pointez la caméra vers le QR code</p>
-    <video id="video" autoplay playsinline></video>
-    <div id="result" class="loading">En attente...</div>
-    <button onclick="location.reload()">Nouvelle scan</button>
+    <p class="subtitle">Pointez la caméra vers le QR code du billet</p>
+    <div id="reader"></div>
+    <div id="result"></div>
+    <button id="resetBtn" onclick="resetScanner()">Scanner un autre billet</button>
   </div>
 
-  <script src="https://unpkg.com/@zxing/library@0.20.1/umd/index.min.js"></script>
   <script>
-    const codeReader = new ZXing.BrowserMultiFormatReader()
-    
-    codeReader.decodeFromVideoDevice(
-      null, 
-      'video', 
-      (result, err) => {
-        if (result) {
-          const ticketId = result.text.trim()
-          document.getElementById('result').innerHTML = `Billet: <strong>${ticketId}</strong>`
-          document.getElementById('result').className = 'valid'
-          
-          // Vérifier billet (optionnel)
-          fetch(`/check-ticket?ticket=${ticketId}`)
-            .then(r => r.json())
-            .then(data => {
-              if (data.valid) {
-                document.getElementById('result').innerHTML += '<br>✅ <strong>VALIDÉ</strong>'
-              } else {
-                document.getElementById('result').className = 'invalid'
-                document.getElementById('result').innerHTML += '<br>❌ <strong>INVALIDÉ</strong>'
-              }
-            })
-        }
-        if (err && !(err.name == 'NotFoundError')) {
-          console.error('Erreur scan:', err)
-        }
+    let html5QrCode = null
+    let scanned = false
+
+    function startScanner() {
+      html5QrCode = new Html5Qrcode("reader")
+      html5QrCode.start(
+        { facingMode: "environment" },
+        { fps: 10, qrbox: { width: 250, height: 250 } },
+        onScanSuccess,
+        onScanError
+      ).catch(err => {
+        document.getElementById('result').style.display = 'block'
+        document.getElementById('result').className = 'invalid'
+        document.getElementById('result').innerHTML = `❌ Caméra inaccessible<div class="ticket-id">${err}</div>`
+      })
+    }
+
+    function onScanSuccess(ticketId) {
+      if (scanned) return
+      scanned = true
+
+      html5QrCode.stop()
+
+      const resultEl = document.getElementById('result')
+      const resetBtn = document.getElementById('resetBtn')
+
+      // Vérifie que c'est un billet Southevents valide
+      if (ticketId.startsWith('SOUTH-')) {
+        resultEl.className = 'valid'
+        resultEl.innerHTML = `✅ BILLET VALIDE<div class="ticket-id">${ticketId}</div>`
+      } else {
+        resultEl.className = 'invalid'
+        resultEl.innerHTML = `❌ BILLET INVALIDE<div class="ticket-id">${ticketId}</div>`
       }
-    )
+
+      resultEl.style.display = 'block'
+      resetBtn.style.display = 'inline-block'
+    }
+
+    function onScanError(err) {
+      // Ignore les erreurs silencieuses (scan en cours)
+    }
+
+    function resetScanner() {
+      scanned = false
+      document.getElementById('result').style.display = 'none'
+      document.getElementById('resetBtn').style.display = 'none'
+      startScanner()
+    }
+
+    // Démarrage automatique
+    startScanner()
   </script>
 </body>
 </html>
