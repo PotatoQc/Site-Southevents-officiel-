@@ -2,7 +2,7 @@ exports.handler = async (event) => {
   try {
     if (event.httpMethod !== 'POST') return { statusCode: 405 }
 
-    const body = JSON.parse(event.body || '{}')
+    const body  = JSON.parse(event.body || '{}')
     
     // Structure CORRECTE Square
     const payment = body.data?.object?.payment || {}
