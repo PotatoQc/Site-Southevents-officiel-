@@ -1,8 +1,3 @@
 [build]
   publish = "."
   functions = "netlify/functions"
-
-[[redirects]]
-  from = "/.netlify/functions/square-webhook"
-  to = "/.netlify/functions/square-webhook"
-  status = 200
