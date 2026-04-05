@@ -3,11 +3,9 @@ exports.handler = async (event) => {
     if (event.httpMethod !== 'POST') return { statusCode: 405 }
 
     const body = JSON.parse(event.body || '{}')
-    
-    // Structure CORRECTE Square
     const payment = body.data?.object?.payment || {}
-    
-    console.log('Payment details:', {
+
+    console.log('Payment:', {
       id: payment.id,
       status: payment.status,
       amount: payment.amount_money?.amount / 100,
@@ -16,15 +14,9 @@ exports.handler = async (event) => {
 
     if (payment.status === 'COMPLETED') {
       const ticketId = `SOUTH-${Date.now().toString().slice(-6)}`
-      const qrData = ticketId  // Juste l'ID — facile à scanner
-      const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${encodeURIComponent(qrData)}`
-      
-      console.log('✅ BILLET GÉNÉRÉ:', {
-        ticketId,
-        qrUrl,
-        paymentId: payment.id,
-        amount: `${payment.amount_money?.amount / 100} ${payment.amount_money?.currency}`
-      })
+      const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${encodeURIComponent(ticketId)}`
+
+      console.log('✅ BILLET GÉNÉRÉ:', { ticketId, qrUrl, paymentId: payment.id })
 
       return {
         statusCode: 200,
@@ -36,6 +28,6 @@ exports.handler = async (event) => {
     return { statusCode: 200, body: 'OK' }
   } catch (error) {
     console.error('Erreur:', error.message)
-    return { statusCode: 200 }
+    return { statusCode: 200, body: 'OK' }
   }
 }

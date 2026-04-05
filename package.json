@@ -1,8 +1,5 @@
 {
-  "dependencies": {
-    "square": "^44.0.1",
-    "node-fetch": "^3.3.2",
-    "qrcode": "^1.5.3",
-    "nodemailer": "^6.9.13"
-  }
+  "name": "southevents",
+  "version": "1.0.0",
+  "dependencies": {}
 }

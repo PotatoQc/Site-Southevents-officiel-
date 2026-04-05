@@ -1,13 +1,43 @@
 <!DOCTYPE html>
-<html>
-<head><title>Paiement Southevents</title></head>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Obtenir son billet — Southevents</title>
+  <link rel="stylesheet" href="style.css">
+</head>
 <body>
-  <script src="https://web.squarecdn.com/v1/square.js"></script>
-  <div id="sq-card"></div>
-  <button id="pay">Payer 39.99$</button>
-  <script>
-    const payments = window.Square.payments('sq0idb-xxxx')
-    // Code Square Checkout complet
-  </script>
+  <nav>
+    <a href="/" class="nav-logo">
+      <img src="logo.jpg" alt="SE">
+      <span class="nav-logo-text">Southevents</span>
+    </a>
+    <ul>
+      <li><a href="/">Accueil</a></li>
+      <li><a href="/reglement.html">Règlement</a></li>
+    </ul>
+  </nav>
+
+  <section style="min-height:100vh;display:flex;align-items:center;justify-content:center;padding-top:80px;">
+    <div style="text-align:center;max-width:500px;">
+      <div class="section-label">Billetterie</div>
+      <h1 class="section-title">OBTENIR<br>SON BILLET</h1>
+      <p style="color:var(--muted);font-family:monospace;font-size:0.75rem;letter-spacing:0.15em;margin-bottom:2.5rem;">
+        Paiement sécurisé via Square. Ton billet QR est envoyé instantanément.
+      </p>
+      <!-- Square Payment Link -->
+      <a href="https://square.link/u/TONLIEN" target="_blank" class="hero-cta hero-cta--filled" style="display:inline-flex;text-decoration:none;">
+        Acheter maintenant →
+      </a>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-brand">
+      <img src="logo.jpg" alt="SE">
+      <span class="footer-brand-name">Southevents</span>
+    </div>
+    <p>ESTD. 2025 — GRANBY, QC</p>
+  </footer>
 </body>
 </html>

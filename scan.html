@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Scanner - Southevents</title>
+  <title>Scanner — Southevents</title>
   <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -23,44 +23,51 @@
       border-radius: 20px;
       padding: 30px;
       width: 100%;
-      max-width: 400px;
+      max-width: 420px;
       text-align: center;
     }
-    h1 { font-size: 22px; margin-bottom: 6px; }
-    .subtitle { color: #888; font-size: 14px; margin-bottom: 24px; }
+    .logo { height: 40px; margin-bottom: 16px; }
+    h1 { font-size: 20px; margin-bottom: 4px; letter-spacing: 0.05em; }
+    .subtitle { color: #666; font-size: 13px; margin-bottom: 20px; font-family: monospace; letter-spacing: 0.15em; text-transform: uppercase; }
     #reader { width: 100%; border-radius: 12px; overflow: hidden; }
     #result {
       margin-top: 20px;
-      padding: 16px;
+      padding: 20px 16px;
       border-radius: 12px;
-      font-size: 18px;
+      font-size: 20px;
       font-weight: bold;
       display: none;
     }
-    .valid { background: #052e16; color: #4ade80; }
-    .invalid { background: #2d0000; color: #ef4444; }
-    .ticket-id { font-size: 14px; font-weight: normal; margin-top: 6px; color: #aaa; }
+    .valid { background: #052e16; color: #4ade80; border: 1px solid #166534; }
+    .invalid { background: #2d0000; color: #ef4444; border: 1px solid #7f1d1d; }
+    .ticket-id { font-size: 13px; font-weight: normal; margin-top: 8px; color: #aaa; font-family: monospace; }
+    .count { font-size: 12px; margin-top: 6px; color: #4ade80; font-family: monospace; }
     button {
-      margin-top: 20px;
+      margin-top: 16px;
       background: #f5f2ec;
       color: #000;
       border: none;
       padding: 12px 30px;
       border-radius: 25px;
-      font-size: 15px;
+      font-size: 14px;
       font-weight: 600;
       cursor: pointer;
       display: none;
+      letter-spacing: 0.1em;
     }
+    .back { display: block; margin-top: 20px; color: #555; font-size: 12px; font-family: monospace; letter-spacing: 0.2em; text-decoration: none; text-transform: uppercase; }
+    .back:hover { color: #f5f2ec; }
   </style>
 </head>
 <body>
   <div class="card">
-    <h1>🔍 Scanner Billet</h1>
-    <p class="subtitle">Pointez la caméra vers le QR code du billet</p>
+    <img src="logo.jpg" class="logo" alt="Southevents">
+    <h1>SCANNER BILLET</h1>
+    <p class="subtitle">Pointez vers le QR code</p>
     <div id="reader"></div>
     <div id="result"></div>
     <button id="resetBtn" onclick="resetScanner()">Scanner un autre billet</button>
+    <a href="/" class="back">← Retour</a>
   </div>
 
   <script>
@@ -73,7 +80,7 @@
         { facingMode: "environment" },
         { fps: 10, qrbox: { width: 250, height: 250 } },
         onScanSuccess,
-        onScanError
+        () => {}
       ).catch(err => {
         document.getElementById('result').style.display = 'block'
         document.getElementById('result').className = 'invalid'
@@ -81,30 +88,45 @@
       })
     }
 
-    function onScanSuccess(ticketId) {
+    async function onScanSuccess(ticketId) {
       if (scanned) return
       scanned = true
-
       html5QrCode.stop()
 
       const resultEl = document.getElementById('result')
       const resetBtn = document.getElementById('resetBtn')
+      resultEl.style.display = 'block'
+      resultEl.className = ''
+      resultEl.innerHTML = '⏳ Validation...'
 
-      // Vérifie que c'est un billet Southevents valide
-      if (ticketId.startsWith('SOUTH-')) {
-        resultEl.className = 'valid'
-        resultEl.innerHTML = `✅ BILLET VALIDE<div class="ticket-id">${ticketId}</div>`
-      } else {
-        resultEl.className = 'invalid'
-        resultEl.innerHTML = `❌ BILLET INVALIDE<div class="ticket-id">${ticketId}</div>`
+      try {
+        const res = await fetch(`/.netlify/functions/validate?ticketId=${encodeURIComponent(ticketId)}`)
+        const data = await res.json()
+
+        if (data.valid) {
+          resultEl.className = 'valid'
+          resultEl.innerHTML = `✅ BILLET VALIDE !
+            <div class="ticket-id">${data.ticketId}</div>
+            <div class="count">Billet #${data.total} scanné</div>`
+        } else {
+          resultEl.className = 'invalid'
+          resultEl.innerHTML = `❌ ${data.reason || 'INVALIDE'}
+            <div class="ticket-id">${ticketId}</div>`
+        }
+      } catch {
+        // Fallback si pas de réseau : vérifie format seulement
+        if (ticketId.startsWith('SOUTH-')) {
+          resultEl.className = 'valid'
+          resultEl.innerHTML = `✅ FORMAT VALIDE (hors-ligne)
+            <div class="ticket-id">${ticketId}</div>`
+        } else {
+          resultEl.className = 'invalid'
+          resultEl.innerHTML = `❌ BILLET INVALIDE
+            <div class="ticket-id">${ticketId}</div>`
+        }
       }
 
-      resultEl.style.display = 'block'
       resetBtn.style.display = 'inline-block'
-    }
-
-    function onScanError(err) {
-      // Ignore les erreurs silencieuses (scan en cours)
     }
 
     function resetScanner() {
@@ -114,7 +136,6 @@
       startScanner()
     }
 
-    // Démarrage automatique
     startScanner()
   </script>
 </body>
