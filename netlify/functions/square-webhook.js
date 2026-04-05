@@ -2,7 +2,7 @@ exports.handler = async (event) => {
   try {
     if (event.httpMethod !== 'POST') return { statusCode: 405 }
 
-    const body  = JSON.parse(event.body || '{}')
+    const body = JSON.parse(event.body || '{}')
     
     // Structure CORRECTE Square
     const payment = body.data?.object?.payment || {}
@@ -16,9 +16,7 @@ exports.handler = async (event) => {
 
     if (payment.status === 'COMPLETED') {
       const ticketId = `SOUTH-${Date.now().toString().slice(-6)}`
-      const qrData = `SOUTHEVENTS:${ticketId}:${payment.id}`
-      
-      // QR Code direct
+      const qrData = ticketId  // Juste l'ID — facile à scanner
       const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${encodeURIComponent(qrData)}`
       
       console.log('✅ BILLET GÉNÉRÉ:', {
