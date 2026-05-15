@@ -3,7 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SOUTHEVENTS</title>
+  <meta name="description" content="Southevents crée des événements et des soirées mémorables. Découvre le prochain événement, les archives et l'accès aux billets." />
+  <meta name="theme-color" content="#0e0e0e" />
+  <title>SOUTHEVENTS | Événements et billets</title>
+  <link rel="preload" href="logo.png" as="image" />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
@@ -13,7 +16,7 @@
   <div class="cursor-ring" id="cursorRing"></div>
 
   <!-- ─── NAV ─── -->
-  <nav>
+  <nav aria-label="Navigation principale">
     <a href="#" class="nav-logo">
       <img src="logo.png" alt="SE Logo" />
       <span class="nav-logo-text">Southevents</span>
@@ -21,7 +24,7 @@
     <ul>
       <li><a href="#countdown">Prochain</a></li>
       <li><a href="#videos">Vidéos</a></li>
-      <li><a href="reglement.html" class="nav-ticket">Obtenir son billet</a></li>
+      <li><a href="reglement.html" class="nav-ticket">Achète ton billet</a></li>
     </ul>
   </nav>
 
@@ -36,7 +39,7 @@
 
 <!-- Vidéo de fond — DOIT être ici, après les effets -->
 <div class="hero-video-wrap">
-  <video class="hero-video" autoplay muted loop playsinline>
+  <video class="hero-video" autoplay muted loop playsinline preload="metadata" aria-label="Ambiance Southevents">
     <source src="intro.mp4" type="video/mp4" />
   </video>
   <div class="hero-video-overlay"></div>
@@ -69,7 +72,7 @@
           </svg>
         </a>
         <a href="reglement.html" class="hero-cta hero-cta--filled">
-          Obtenir son billet
+          Achète ton billet
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <rect x="2" y="9" width="20" height="13" rx="1"/>
             <path d="M16 2v4M8 2v4M2 13h20"/>
@@ -121,6 +124,7 @@
       THROW BACK 2010
     </div>
     <div class="next-event-date" id="eventDateDisplay">Date à définir</div>
+    <p class="countdown-status" id="countdownStatus" aria-live="polite"></p>
 
     <div class="countdown-grid">
       <div class="countdown-unit">
@@ -146,7 +150,7 @@
 
     <div class="countdown-cta-wrap">
       <a href="reglement.html" class="hero-cta hero-cta--filled">
-        Obtenir son billet
+        Achète ton billet
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <rect x="2" y="9" width="20" height="13" rx="1"/>
           <path d="M16 2v4M8 2v4M2 13h20"/>

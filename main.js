@@ -4,8 +4,9 @@ const cursorRing = document.getElementById('cursorRing')
 let mx = 0, my = 0, rx = 0, ry = 0
 
 const isTouchDevice = () => window.matchMedia('(hover: none)').matches
+const prefersReducedMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
-if (isTouchDevice()) {
+if (isTouchDevice() || prefersReducedMotion()) {
   cursor.style.display = 'none'
   cursorRing.style.display = 'none'
 } else {
@@ -26,7 +27,7 @@ if (isTouchDevice()) {
 // ─── PARTICLES ────────────────────────────────
 function initParticles() {
   const canvas = document.getElementById('particles')
-  if (!canvas) return
+  if (!canvas || prefersReducedMotion()) return
   const ctx = canvas.getContext('2d')
   function resize() {
     const hero = canvas.parentElement
@@ -80,11 +81,9 @@ function initStats() {
         const elapsed = now - start
         const prog = Math.min(elapsed / dur, 1)
         const ease = 1 - Math.pow(1 - prog, 3)
-        el.textContent = el.dataset.noformat
-          ? Math.floor(ease * target)
-          : Math.floor(ease * target).toLocaleString('fr-CA')
+        el.textContent = Math.floor(ease * target)
         if (prog < 1) requestAnimationFrame(tick)
-        else el.textContent = el.dataset.noformat ? target : target.toLocaleString('fr-CA')
+        else el.textContent = target
       }
       requestAnimationFrame(tick)
       observer.unobserve(el)
@@ -95,9 +94,11 @@ function initStats() {
 initStats()
 
 // ─── COUNTDOWN ────────────────────────────────
-let targetDate = new Date('2026-04-03T21:00:00')
+const targetDate = new Date('2026-04-03T21:00:00')
 
 const eventDateDisplay = document.getElementById('eventDateDisplay')
+const countdownStatus = document.getElementById('countdownStatus')
+const countdownSection = document.getElementById('countdown')
 if (eventDateDisplay && targetDate) {
   eventDateDisplay.textContent = targetDate.toLocaleDateString('fr-CA', {
     weekday: 'long', day: 'numeric', month: 'long', year: 'numeric'
@@ -109,7 +110,14 @@ function updateCountdown() {
   const ids = ['days', 'hours', 'minutes', 'seconds']
   if (!targetDate) { ids.forEach(id => document.getElementById(id).textContent = '--'); return }
   const diff = targetDate - Date.now()
-  if (diff < 0) { ids.forEach(id => document.getElementById(id).textContent = '00'); return }
+  if (diff < 0) {
+    ids.forEach(id => document.getElementById(id).textContent = '00')
+    countdownSection?.classList.add('countdown-expired')
+    if (countdownStatus) countdownStatus.textContent = 'Cet événement est terminé. La prochaine date sera annoncée bientôt.'
+    return
+  }
+  countdownSection?.classList.remove('countdown-expired')
+  if (countdownStatus) countdownStatus.textContent = 'Le prochain événement approche.'
   document.getElementById('days').textContent    = pad(Math.floor(diff / 86400000))
   document.getElementById('hours').textContent   = pad(Math.floor(diff % 86400000 / 3600000))
   document.getElementById('minutes').textContent = pad(Math.floor(diff % 3600000 / 60000))
@@ -120,6 +128,7 @@ updateCountdown()
 
 // ─── VIDEO GALLERY ────────────────────────────
 let videos = [
+  { title: 'ThrowBack 2010', date: '3 Avril 2026', igUrl: 'https://www.instagram.com/reel/DW4Ij6kDSlS/', preview: 'tb2010.mp4' },
   { title: 'ThrowBack 2016', date: '6 Mars 2026', igUrl: 'https://www.instagram.com/reel/DVq2r23jUnn/', preview: 'tb2016.mp4' },
 ]
 
@@ -131,7 +140,7 @@ function renderVideos() {
     const isVideo = v.preview && /\.(mp4|webm)$/i.test(v.preview)
     const media = v.preview
       ? isVideo
-        ? `<video class="card-preview-video" src="${v.preview}" muted loop playsinline
+        ? `<video class="card-preview-video" src="${v.preview}" muted loop playsinline preload="metadata"
              style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;"></video>`
         : `<img src="${v.preview}" alt="${v.title}"
              style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;" />`
@@ -141,7 +150,7 @@ function renderVideos() {
 
     return `
       <div class="video-card fade-up">
-        <a href="${v.igUrl}" target="_blank" rel="noopener">
+        <a href="${v.igUrl}" target="_blank" rel="noopener" aria-label="Voir ${v.title} sur Instagram">
           <div class="video-wrapper">
             ${media}
             <div class="ig-overlay">
