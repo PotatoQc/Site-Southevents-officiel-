@@ -94,14 +94,14 @@ function initStats() {
 initStats()
 
 // ─── COUNTDOWN ────────────────────────────────
-const targetDate = new Date('2026-04-03T21:00:00')
+const targetDate = new Date('2026-05-28T22:00:00-04:00')
 
 const eventDateDisplay = document.getElementById('eventDateDisplay')
 const countdownStatus = document.getElementById('countdownStatus')
 const countdownSection = document.getElementById('countdown')
 if (eventDateDisplay && targetDate) {
   eventDateDisplay.textContent = targetDate.toLocaleDateString('fr-CA', {
-    weekday: 'long', day: 'numeric', month: 'long', year: 'numeric'
+    weekday: 'long', day: 'numeric', month: 'long', year: 'numeric', timeZone: 'America/Toronto'
   })
 }
 
