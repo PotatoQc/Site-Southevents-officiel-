@@ -424,7 +424,12 @@ nav ul a:hover { color: var(--white); }
   animation: marqueeScroll 22s linear infinite;
   will-change: transform;
 }
-.marquee-track span {
+.marquee-set {
+  display: flex;
+  align-items: center;
+  min-width: max-content;
+}
+.marquee-set span {
   font-family: 'Bebas Neue', sans-serif;
   font-size: 1rem;
   letter-spacing: 0.3em;
@@ -432,7 +437,7 @@ nav ul a:hover { color: var(--white); }
   color: var(--white-dim);
   padding: 0 1.5rem;
 }
-.marquee-track .mx {
+.marquee-set .mx {
   color: var(--muted);
   padding: 0 0.2rem;
   font-size: 0.7rem;
