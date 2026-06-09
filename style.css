@@ -705,16 +705,22 @@ section { padding: 6rem 3rem; }
   background: #ffffff;
   border: 1px solid var(--border-mid);
   overflow: hidden;
+  cursor: none;
 }
 
 .hievents-widget {
   color: #000000;
+  height: 350px;
+  overflow: hidden;
+  cursor: none;
 }
 
 .hievents-widget iframe {
   display: block;
-  height: 335px;
-  min-height: 335px;
+  height: 350px !important;
+  min-height: 350px !important;
+  max-height: 350px !important;
+  cursor: none;
 }
 
 .ticket-widget-fallback {
