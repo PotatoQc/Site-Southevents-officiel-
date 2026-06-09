@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Commande un chandail Southevents et indique tes grandeurs pour chaque unité." />
+  <meta name="theme-color" content="#0e0e0e" />
+  <title>Commande merch | SOUTHEVENTS</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
+
+  <nav aria-label="Navigation principale">
+    <a href="index.html" class="nav-logo">
+      <img src="logo.png" alt="SE Logo" />
+      <span class="nav-logo-text">Southevents</span>
+    </a>
+    <ul>
+      <li><a href="index.html#merch">Merch</a></li>
+      <li><a href="index.html#videos">Vidéos</a></li>
+      <li><a href="reglement.html" class="nav-ticket">Achète ton billet</a></li>
+    </ul>
+  </nav>
+
+  <main class="order-page">
+    <a class="order-back-link" href="index.html#merch">Retour aux designs</a>
+
+    <div class="order-shell">
+      <aside class="order-preview">
+        <div class="order-design-pair">
+          <div class="merch-image-wrap">
+            <img src="merch-front.png" alt="Devant du chandail Southevents" onerror="this.style.display='none'" />
+            <div class="merch-image-fallback">
+              <span>Devant</span>
+            </div>
+            <span class="merch-side-label">Devant</span>
+          </div>
+          <div class="merch-image-wrap">
+            <img id="orderDesignImage" src="design1.png" alt="Design sélectionné" onerror="this.style.display='none'" />
+            <div class="merch-image-fallback">
+              <span id="orderDesignFallback">Design 01</span>
+              <small id="orderDesignFilename">design1.png</small>
+            </div>
+            <span class="merch-side-label">Design</span>
+          </div>
+        </div>
+
+        <span class="order-kicker">Commande merch</span>
+        <h1 class="order-title">CHANDAIL<br>SOUTHEVENTS</h1>
+        <p class="order-note">On demande tes informations pour confirmer la commande, organiser la livraison ou le ramassage et faire le suivi par le moyen de communication choisi.</p>
+
+        <div class="order-summary" aria-live="polite">
+          <div class="order-summary-row">
+            <span>Designs</span>
+            <strong id="summaryDesign">Design 01</strong>
+          </div>
+          <div class="order-summary-row">
+            <span>Quantité</span>
+            <strong id="summaryQuantity">1</strong>
+          </div>
+          <div class="order-summary-row">
+            <span>Prix</span>
+            <strong id="summaryTotal">50$</strong>
+          </div>
+        </div>
+      </aside>
+
+      <section class="order-form-panel" aria-label="Informations de commande">
+        <form id="merchOrderForm">
+          <div class="form-group">
+            <label for="fullNameInput">Nom complet</label>
+            <input id="fullNameInput" name="fullName" type="text" placeholder="Ex: Alex Tremblay" required />
+          </div>
+
+          <div class="form-group">
+            <label for="quantityInput">Quantité de chandail</label>
+            <input id="quantityInput" name="quantity" type="number" min="1" max="20" value="1" required />
+          </div>
+
+          <div class="form-group">
+            <label>Design et grandeur pour chaque unité</label>
+            <div class="size-grid" id="sizeGrid"></div>
+          </div>
+
+          <div class="form-group">
+            <label for="deliverySelect">Livraison ou ramassage</label>
+            <select id="deliverySelect" name="deliveryMethod" required>
+              <option value="pickup">Je veux venir le chercher</option>
+              <option value="delivery">Je veux me faire livrer</option>
+            </select>
+            <p class="form-help" id="deliveryHelp">On va te contacter pour te donner l'adresse de ramassage.</p>
+          </div>
+
+          <div class="form-group order-address-group" id="addressGroup" hidden>
+            <label for="addressInput">Adresse complète de livraison</label>
+            <textarea id="addressInput" name="address" placeholder="Numéro civique, rue, appartement, ville, code postal"></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="contactInput">Téléphone, Instagram ou courriel</label>
+            <input id="contactInput" name="contact" type="text" placeholder="Ex: 514-000-0000, @tonig ou nom@email.com" required />
+            <p class="form-help">Cette info sert uniquement à te rejoindre pour confirmer la commande.</p>
+          </div>
+
+          <div class="form-group">
+            <label for="noteInput">Note</label>
+            <textarea id="noteInput" name="note" placeholder="Optionnel: détails utiles pour te contacter"></textarea>
+          </div>
+
+          <div class="payment-instructions">
+            <strong>Virement Interac</strong>
+            <p>Pour que la commande soit traitée, le virement doit être envoyé à <span>sevirements@southevents.ca</span>. Une fois le virement reçu, on te contactera avec le moyen indiqué ci-dessus pour confirmer les détails.</p>
+          </div>
+
+          <div class="order-summary">
+            <div class="order-summary-row">
+              <span>Prix par chandail</span>
+              <strong class="order-price">50$</strong>
+            </div>
+            <div class="order-summary-row">
+              <span>Total</span>
+              <strong class="order-total" id="formTotal">50$</strong>
+            </div>
+          </div>
+
+          <button class="btn-primary" type="submit">Passer la commande</button>
+          <div class="order-confirmation" id="orderConfirmation" role="status" aria-live="polite"></div>
+        </form>
+      </section>
+    </div>
+  </main>
+
+  <div class="order-popup" id="orderPopup" role="dialog" aria-modal="true" aria-labelledby="orderPopupTitle" hidden>
+    <div class="order-popup-box">
+      <button class="modal-close" type="button" id="orderPopupClose">Fermer</button>
+      <span class="order-kicker">Commande reçue</span>
+      <h2 class="modal-title" id="orderPopupTitle">Merci pour ta commande</h2>
+      <div class="order-popup-number" id="popupOrderNumber"></div>
+      <p>Conserve ton numéro de commande. Il servira à retrouver rapidement ta commande lors du suivi.</p>
+      <p>Effectue ton virement Interac à <strong>sevirements@southevents.ca</strong>. La commande sera traitée après réception du virement.</p>
+      <p>Une fois le virement reçu, on te contactera avec le moyen de communication choisi pour confirmer le tout.</p>
+      <a class="hero-cta hero-cta--filled" href="index.html#merch">Retour à la merch</a>
+    </div>
+  </div>
+
+  <script src="main.js?v=merch-3"></script>
+  <script src="merch-order.js?v=merch-7"></script>
+</body>
+</html>

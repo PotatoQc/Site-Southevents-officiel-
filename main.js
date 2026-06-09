@@ -6,7 +6,9 @@ let mx = 0, my = 0, rx = 0, ry = 0
 const isTouchDevice = () => window.matchMedia('(hover: none)').matches
 const prefersReducedMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
-if (isTouchDevice() || prefersReducedMotion()) {
+if (!cursor || !cursorRing) {
+  // Page sans curseur custom.
+} else if (isTouchDevice() || prefersReducedMotion()) {
   cursor.style.display = 'none'
   cursorRing.style.display = 'none'
 } else {
@@ -108,23 +110,27 @@ if (eventDateDisplay && targetDate) {
 function pad(n) { return String(n).padStart(2, '0') }
 function updateCountdown() {
   const ids = ['days', 'hours', 'minutes', 'seconds']
-  if (!targetDate) { ids.forEach(id => document.getElementById(id).textContent = '--'); return }
+  const countdownEls = ids.map(id => document.getElementById(id))
+  if (!countdownEls.every(Boolean)) return
+  if (!targetDate) { countdownEls.forEach(el => el.textContent = '--'); return }
   const diff = targetDate - Date.now()
   if (diff < 0) {
-    ids.forEach(id => document.getElementById(id).textContent = '00')
+    countdownEls.forEach(el => el.textContent = '00')
     countdownSection?.classList.add('countdown-expired')
     if (countdownStatus) countdownStatus.textContent = 'Cet événement est terminé. La prochaine date sera annoncée bientôt.'
     return
   }
   countdownSection?.classList.remove('countdown-expired')
   if (countdownStatus) countdownStatus.textContent = 'Le prochain événement approche.'
-  document.getElementById('days').textContent    = pad(Math.floor(diff / 86400000))
-  document.getElementById('hours').textContent   = pad(Math.floor(diff % 86400000 / 3600000))
-  document.getElementById('minutes').textContent = pad(Math.floor(diff % 3600000 / 60000))
-  document.getElementById('seconds').textContent = pad(Math.floor(diff % 60000 / 1000))
+  countdownEls[0].textContent = pad(Math.floor(diff / 86400000))
+  countdownEls[1].textContent = pad(Math.floor(diff % 86400000 / 3600000))
+  countdownEls[2].textContent = pad(Math.floor(diff % 3600000 / 60000))
+  countdownEls[3].textContent = pad(Math.floor(diff % 60000 / 1000))
 }
-setInterval(updateCountdown, 1000)
-updateCountdown()
+if (countdownSection) {
+  setInterval(updateCountdown, 1000)
+  updateCountdown()
+}
 
 // ─── VIDEO GALLERY ────────────────────────────
 let videos = [
@@ -134,6 +140,7 @@ let videos = [
 
 function renderVideos() {
   const grid = document.getElementById('videoGrid')
+  if (!grid) return
   const touch = isTouchDevice()
 
   grid.innerHTML = videos.map(v => {
@@ -188,6 +195,21 @@ function renderVideos() {
   })
 }
 renderVideos()
+
+// ─── TICKET WIDGET FALLBACK ───────────────────
+function initTicketWidgetFallback() {
+  const widget = document.querySelector('.hievents-widget')
+  const fallback = document.getElementById('ticketWidgetFallback')
+  if (!widget || !fallback) return
+
+  setTimeout(() => {
+    const iframe = widget.querySelector('iframe')
+    if (!iframe) {
+      fallback.classList.add('show')
+    }
+  }, 8000)
+}
+initTicketWidgetFallback()
 
 // ─── SCROLL REVEAL ────────────────────────────
 const observer = new IntersectionObserver(entries => {
