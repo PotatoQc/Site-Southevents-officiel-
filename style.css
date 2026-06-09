@@ -713,7 +713,8 @@ section { padding: 6rem 3rem; }
 
 .hievents-widget iframe {
   display: block;
-  min-height: 420px;
+  height: 335px;
+  min-height: 335px;
 }
 
 .ticket-widget-fallback {
