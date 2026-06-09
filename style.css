@@ -704,7 +704,6 @@ section { padding: 6rem 3rem; }
   margin: 0 auto;
   background: #ffffff;
   border: 1px solid var(--border-mid);
-  min-height: 360px;
   overflow: hidden;
 }
 
@@ -714,7 +713,7 @@ section { padding: 6rem 3rem; }
 
 .hievents-widget iframe {
   display: block;
-  min-height: 640px;
+  min-height: 420px;
 }
 
 .ticket-widget-fallback {
