@@ -101,6 +101,8 @@ const targetDate = new Date('2026-06-19T22:00:00-04:00')
 const eventDateDisplay = document.getElementById('eventDateDisplay')
 const countdownStatus = document.getElementById('countdownStatus')
 const countdownSection = document.getElementById('countdown')
+const ticketsSection = document.getElementById('billets')
+const ticketLinks = document.querySelectorAll('a[href="#billets"]')
 if (eventDateDisplay && targetDate) {
   eventDateDisplay.textContent = targetDate.toLocaleDateString('fr-CA', {
     weekday: 'long', day: 'numeric', month: 'long', year: 'numeric', timeZone: 'America/Toronto'
@@ -108,6 +110,12 @@ if (eventDateDisplay && targetDate) {
 }
 
 function pad(n) { return String(n).padStart(2, '0') }
+function syncTicketsAvailability(isExpired) {
+  if (ticketsSection) ticketsSection.hidden = isExpired
+  ticketLinks.forEach(link => {
+    link.hidden = isExpired
+  })
+}
 function updateCountdown() {
   const ids = ['days', 'hours', 'minutes', 'seconds']
   const countdownEls = ids.map(id => document.getElementById(id))
@@ -117,10 +125,12 @@ function updateCountdown() {
   if (diff < 0) {
     countdownEls.forEach(el => el.textContent = '00')
     countdownSection?.classList.add('countdown-expired')
+    syncTicketsAvailability(true)
     if (countdownStatus) countdownStatus.textContent = 'Cet événement est terminé. La prochaine date sera annoncée bientôt.'
     return
   }
   countdownSection?.classList.remove('countdown-expired')
+  syncTicketsAvailability(false)
   if (countdownStatus) countdownStatus.textContent = 'Le prochain événement approche.'
   countdownEls[0].textContent = pad(Math.floor(diff / 86400000))
   countdownEls[1].textContent = pad(Math.floor(diff % 86400000 / 3600000))
