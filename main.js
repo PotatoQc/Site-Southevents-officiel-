@@ -96,7 +96,7 @@ function initStats() {
 initStats()
 
 // ─── COUNTDOWN ────────────────────────────────
-const targetDate = new Date('2026-06-19T22:00:00-04:00')
+const targetDate = new Date('2026-07-10T22:00:00-04:00')
 
 const eventDateDisplay = document.getElementById('eventDateDisplay')
 const countdownStatus = document.getElementById('countdownStatus')
