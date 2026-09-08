@@ -8,7 +8,7 @@
   <title>SOUTHEVENTS | Événements et billets</title>
   <link rel="preload" href="logo.png" as="image" />
   <link rel="icon" type="logo.png" href="/images/favicon.ico">
-  <link rel="stylesheet" href="style.css?v=neon-5" />
+  <link rel="stylesheet" href="style.css?v=neon-6" />
 </head>
 <body>
 
@@ -178,13 +178,17 @@
     </p>
 
     <div class="ticket-widget-wrap">
-      <!-- Widget en carte claire volontaire (lisible en mode clair, sombre, Dark Reader).
-           secondary-color = couleur des icônes +/- du sélecteur de quantité :
-           doit contraster avec background-color (#ffffff), sinon boutons invisibles. -->
+      <!-- Widget en carte claire volontaire (lisible partout, avec ou sans Dark Reader).
+           Chez Hi.Events :
+             background-color   → fond du widget (blanc)
+             primary-text-color → texte principal : titres + prix des billets (doit contraster avec le fond → foncé)
+             primary-color      → accent : bordures des cartes, contour du sélecteur de quantité
+             secondary-color    → fond des boutons/bandeaux (« Continuer », « OFFRE LIMITÉE ») + icône des +/-
+             secondary-text-color → texte sur ces boutons/bandeaux -->
       <div
         data-hievents-id="10807"
         data-hievents-primary-color="#ed0799"
-        data-hievents-primary-text-color="#ffffff"
+        data-hievents-primary-text-color="#111111"
         data-hievents-secondary-color="#0e0e0e"
         data-hievents-secondary-text-color="#ffffff"
         data-hievents-background-color="#ffffff"
@@ -345,7 +349,7 @@
 
   <!-- Billetterie Hi.Events — événement 10807 hébergé sur app.hi.events -->
   <script async src="https://app.hi.events/widget.js"></script>
-  <script src="main.js?v=neon-5"></script>
+  <script src="main.js?v=neon-6"></script>
 </body>
 </html>
 
