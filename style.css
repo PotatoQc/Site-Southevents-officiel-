@@ -748,21 +748,20 @@ section { padding: 6rem 3rem; }
   background: #ffffff;
   border: 1px solid var(--border-mid);
   overflow: hidden;
-  cursor: none;
+  min-height: 320px;
+  cursor: auto;
 }
 
 .hievents-widget {
-  color: #000000;
-  min-height: 360px;
-  cursor: none;
+  display: block;
+  width: 100%;
+  cursor: auto;
 }
 
 .hievents-widget iframe {
   display: block;
-  width: 100%;
-  min-height: 360px !important;
-  border: none;
-  cursor: none;
+  width: 100% !important;
+  border: 0;
 }
 
 .ticket-widget-fallback {

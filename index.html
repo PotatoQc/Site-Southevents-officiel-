@@ -178,11 +178,13 @@
     </p>
 
     <div class="ticket-widget-wrap">
+      <!-- secondary-color = couleur des icônes +/- du sélecteur de quantité :
+           doit contraster avec background-color (blanc), sinon boutons invisibles. -->
       <div
         data-hievents-id="10807"
-        data-hievents-primary-color="#ed0799ff"
-        data-hievents-primary-text-color="#000000"
-        data-hievents-secondary-color="#ffffffff"
+        data-hievents-primary-color="#ed0799"
+        data-hievents-primary-text-color="#ffffff"
+        data-hievents-secondary-color="#ed0799"
         data-hievents-secondary-text-color="#ffffff"
         data-hievents-background-color="#ffffff"
         data-hievents-widget-type="widget"
@@ -195,7 +197,7 @@
     </div>
     <div class="ticket-widget-fallback" id="ticketWidgetFallback">
       <p>Si le module de billetterie reste en chargement, le service ne répond probablement pas correctement. Réessaie dans quelques instants.</p>
-      <a href="https://billet.southevents.ca/event/10807" target="_blank" rel="noopener" class="hero-cta hero-cta--filled">
+      <a href="https://app.hi.events/event/10807" target="_blank" rel="noopener" class="hero-cta hero-cta--filled">
         Ouvrir la billetterie
       </a>
     </div>
@@ -340,7 +342,8 @@
     <p>© 2025 SOUTHEVENTS — Tous droits réservés</p>
   </footer>
 
-  <script defer src="https://billet.southevents.ca/widget.js"></script>
+  <!-- Billetterie Hi.Events — événement 10807 hébergé sur app.hi.events -->
+  <script async src="https://app.hi.events/widget.js"></script>
   <script src="main.js?v=neon-1"></script>
 </body>
 </html>
