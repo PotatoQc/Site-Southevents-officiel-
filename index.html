@@ -5,10 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="Southevents crée des événements et des soirées mémorables. Prochain événement : NEON PARTY, 25 septembre 2026 au Cégep Édouard-Montpetit. Réserve ton entrée." />
   <meta name="theme-color" content="#0e0e0e" />
+  <meta name="color-scheme" content="dark" />
   <title>SOUTHEVENTS | Événements et billets</title>
   <link rel="preload" href="logo.png" as="image" />
   <link rel="icon" type="logo.png" href="/images/favicon.ico">
-  <link rel="stylesheet" href="style.css?v=neon-1" />
+  <link rel="stylesheet" href="style.css?v=neon-2" />
 </head>
 <body>
 
@@ -178,15 +179,16 @@
     </p>
 
     <div class="ticket-widget-wrap">
-      <!-- secondary-color = couleur des icônes +/- du sélecteur de quantité :
-           doit contraster avec background-color (blanc), sinon boutons invisibles. -->
+      <!-- Widget thématisé foncé pour rester lisible en mode clair comme foncé.
+           secondary-color = couleur des icônes +/- du sélecteur de quantité :
+           doit contraster avec background-color (#141414), sinon boutons invisibles. -->
       <div
         data-hievents-id="10807"
         data-hievents-primary-color="#ed0799"
         data-hievents-primary-text-color="#ffffff"
-        data-hievents-secondary-color="#ed0799"
-        data-hievents-secondary-text-color="#ffffff"
-        data-hievents-background-color="#ffffff"
+        data-hievents-secondary-color="#f5f2ec"
+        data-hievents-secondary-text-color="#0e0e0e"
+        data-hievents-background-color="#141414"
         data-hievents-widget-type="widget"
         data-hievents-widget-version="1.0"
         data-hievents-locale="fr"
@@ -344,7 +346,7 @@
 
   <!-- Billetterie Hi.Events — événement 10807 hébergé sur app.hi.events -->
   <script async src="https://app.hi.events/widget.js"></script>
-  <script src="main.js?v=neon-1"></script>
+  <script src="main.js?v=neon-2"></script>
 </body>
 </html>
 

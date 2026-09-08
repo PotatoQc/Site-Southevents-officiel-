@@ -22,7 +22,7 @@
 
 /* ─── RESET ─── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; color-scheme: dark; }
 body {
   background: var(--bg);
   color: var(--white);
@@ -745,7 +745,7 @@ section { padding: 6rem 3rem; }
 .ticket-widget-wrap {
   max-width: 980px;
   margin: 0 auto;
-  background: #ffffff;
+  background: var(--bg2);
   border: 1px solid var(--border-mid);
   overflow: hidden;
   min-height: 320px;
@@ -762,6 +762,7 @@ section { padding: 6rem 3rem; }
   display: block;
   width: 100% !important;
   border: 0;
+  color-scheme: dark;
 }
 
 .ticket-widget-fallback {
