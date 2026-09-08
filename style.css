@@ -22,7 +22,7 @@
 
 /* ─── RESET ─── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; color-scheme: dark; }
+html { scroll-behavior: smooth; }
 body {
   background: var(--bg);
   color: var(--white);
@@ -745,7 +745,7 @@ section { padding: 6rem 3rem; }
 .ticket-widget-wrap {
   max-width: 980px;
   margin: 0 auto;
-  background: var(--bg2);
+  background: #ffffff;
   border: 1px solid var(--border-mid);
   overflow: hidden;
   min-height: 320px;
@@ -762,7 +762,10 @@ section { padding: 6rem 3rem; }
   display: block;
   width: 100% !important;
   border: 0;
-  color-scheme: dark;
+  /* Le widget est volontairement clair (fond blanc, texte foncé), quel que
+     soit le thème du système : on force son schéma clair pour éviter le
+     texte clair sur fond blanc quand l'OS est en mode sombre. */
+  color-scheme: light;
 }
 
 .ticket-widget-fallback {
