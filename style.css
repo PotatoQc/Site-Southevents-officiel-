@@ -528,22 +528,23 @@ section { padding: 6rem 3rem; }
   margin-bottom: 0.4rem;
   position: relative; z-index: 2;
 }
-.next-event-date {
+.next-event-date,
+.next-event-venue {
   font-family: 'Space Mono', monospace;
-  font-size: 0.7rem;
-  color: var(--muted);
-  margin-bottom: 0.6rem;
   letter-spacing: 0.12em;
   position: relative; z-index: 2;
 }
+.next-event-date {
+  font-size: 0.7rem;
+  color: var(--muted);
+  margin-bottom: 0.6rem;
+}
 .next-event-venue {
-  font-family: 'Space Mono', monospace;
   font-size: 0.62rem;
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--white-dim);
   margin-bottom: 1.4rem;
-  position: relative; z-index: 2;
 }
 .next-event-poster {
   display: block;
@@ -730,11 +731,7 @@ section { padding: 6rem 3rem; }
 }
 
 .billets-note {
-  max-width: 620px;
   margin-bottom: 2.5rem;
-  color: var(--white-dim);
-  line-height: 1.8;
-  font-weight: 300;
 }
 
 .billets-note strong {
@@ -747,26 +744,18 @@ section { padding: 6rem 3rem; }
   margin: 0 auto;
   background: #ffffff;
   border: 1px solid var(--border-mid);
-  min-height: 560px;
-  cursor: auto;
-}
-
-.hievents-widget {
-  display: block;
-  width: 100%;
-  cursor: auto;
+  /* Réserve la place avant le chargement de l'iframe (évite le saut de mise
+     en page). Le script « autoresize » de Hi.Events règle la hauteur réelle. */
+  min-height: 400px;
+  cursor: auto; /* rétablit le curseur natif dans le widget (body a cursor:none) */
 }
 
 .hievents-widget iframe {
   display: block;
   width: 100% !important;
-  /* Hauteur plancher : sur mobile le message « autoresize » peut tarder ou
-     ne jamais arriver — sans ça l'iframe reste plate et on ne voit qu'un
-     rectangle blanc. autoresize peut toujours l'agrandir au-delà. */
-  min-height: 560px;
   border: 0;
-  /* Le widget est volontairement clair (fond blanc, texte foncé), quel que
-     soit le thème du système. */
+  /* Widget volontairement clair (fond blanc, texte foncé), quel que soit le
+     thème du système. */
   color-scheme: light;
 }
 
@@ -805,7 +794,8 @@ section { padding: 6rem 3rem; }
   margin-bottom: 2.5rem;
 }
 
-.merch-intro p {
+.merch-intro p,
+.billets-note {
   max-width: 620px;
   color: var(--white-dim);
   line-height: 1.8;

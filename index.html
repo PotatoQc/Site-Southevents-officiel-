@@ -8,6 +8,7 @@
   <title>SOUTHEVENTS | Événements et billets</title>
   <link rel="preload" href="logo.png" as="image" />
   <link rel="icon" type="logo.png" href="/images/favicon.ico">
+  <link rel="preconnect" href="https://app.hi.events" />
   <link rel="stylesheet" href="style.css?v=neon-6" />
 </head>
 <body>
@@ -129,8 +130,9 @@
     <div class="next-event-venue">Cafétéria étudiante — Cégep Édouard-Montpetit · Longueuil</div>
     <p class="countdown-status" id="countdownStatus" aria-live="polite"></p>
 
-    <a class="next-event-poster" href="neon.png" target="_blank" rel="noopener" aria-label="Voir l'affiche de NEON PARTY">
-      <img src="neon.png" alt="Affiche NEON PARTY — 25 septembre 2026, Cégep Édouard-Montpetit, entrée gratuite pour les 50 premières personnes" loading="lazy" />
+    <a class="next-event-poster" href="neon.webp" target="_blank" rel="noopener" aria-label="Voir l'affiche de NEON PARTY">
+      <img src="neon.webp" width="1200" height="1600" loading="lazy" decoding="async"
+           alt="Affiche NEON PARTY — 25 septembre 2026, Cégep Édouard-Montpetit, entrée gratuite pour les 50 premières personnes" />
     </a>
 
     <div class="countdown-grid">
@@ -348,7 +350,7 @@
   </footer>
 
   <!-- Billetterie Hi.Events — événement 10807 hébergé sur app.hi.events -->
-  <script async src="https://app.hi.events/widget.js"></script>
+  <script defer src="https://app.hi.events/widget.js"></script>
   <script src="main.js?v=neon-6"></script>
 </body>
 </html>

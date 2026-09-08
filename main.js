@@ -105,10 +105,9 @@ const countdownSection = document.getElementById('countdown')
 const ticketsSection = document.getElementById('billets')
 const ticketLinks = document.querySelectorAll('a[href="#billets"]')
 if (eventDateDisplay && targetDate) {
-  const dateStr = targetDate.toLocaleDateString('fr-CA', {
+  eventDateDisplay.textContent = targetDate.toLocaleDateString('fr-CA', {
     weekday: 'long', day: 'numeric', month: 'long', year: 'numeric', timeZone: 'America/Toronto'
-  })
-  eventDateDisplay.textContent = `${dateStr} · 19 h à 2 h`
+  }) + ' · 19 h à 2 h'
 }
 
 function pad(n) { return String(n).padStart(2, '0') }
