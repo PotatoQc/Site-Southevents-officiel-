@@ -747,8 +747,7 @@ section { padding: 6rem 3rem; }
   margin: 0 auto;
   background: #ffffff;
   border: 1px solid var(--border-mid);
-  overflow: hidden;
-  min-height: 320px;
+  min-height: 560px;
   cursor: auto;
 }
 
@@ -761,10 +760,13 @@ section { padding: 6rem 3rem; }
 .hievents-widget iframe {
   display: block;
   width: 100% !important;
+  /* Hauteur plancher : sur mobile le message « autoresize » peut tarder ou
+     ne jamais arriver — sans ça l'iframe reste plate et on ne voit qu'un
+     rectangle blanc. autoresize peut toujours l'agrandir au-delà. */
+  min-height: 560px;
   border: 0;
   /* Le widget est volontairement clair (fond blanc, texte foncé), quel que
-     soit le thème du système : on force son schéma clair pour éviter le
-     texte clair sur fond blanc quand l'OS est en mode sombre. */
+     soit le thème du système. */
   color-scheme: light;
 }
 
