@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Southevents crée des événements et des soirées mémorables. Découvre le prochain événement, les archives et l'accès aux billets." />
+  <meta name="description" content="Southevents crée des événements et des soirées mémorables. Prochain événement : NEON PARTY, 25 septembre 2026 au Cégep Édouard-Montpetit. Réserve ton entrée." />
   <meta name="theme-color" content="#0e0e0e" />
   <title>SOUTHEVENTS | Événements et billets</title>
   <link rel="preload" href="logo.png" as="image" />
   <link rel="icon" type="logo.png" href="/images/favicon.ico">
-  <link rel="stylesheet" href="style.css?v=tickets-crop-3" />
+  <link rel="stylesheet" href="style.css?v=neon-1" />
 </head>
 <body>
 
@@ -26,8 +26,7 @@
       <li><a href="#countdown">Prochain</a></li>
       <li><a href="#merch">Merch</a></li>
       <li><a href="#videos">Vidéos</a></li>
-      <li><a href="reglement.html" class="nav-ticket">Achète ton billet</a></li>
-      <!-- <li><a href="#billets" class="nav-ticket">Achète ton billet</a></li> -->
+      <li><a href="#billets" class="nav-ticket">Réserve ton entrée</a></li>
     </ul>
   </nav>
 
@@ -74,8 +73,8 @@
             <polyline points="12,5 19,12 12,19"/>
           </svg>
         </a>
-        <a href="reglement.html" class="hero-cta hero-cta--filled">
-          Achète ton billet
+        <a href="#billets" class="hero-cta hero-cta--filled">
+          Réserve ton entrée
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <rect x="2" y="9" width="20" height="13" rx="1"/>
             <path d="M16 2v4M8 2v4M2 13h20"/>
@@ -123,11 +122,16 @@
   <section id="countdown">
     <!-- Tag au-dessus du nom -->
     <div class="next-event-tag">Prochain événement</div>
-    <div class="next-event-name glitch" id="eventName" data-text="RED CARPET">
-      RED CARPET
+    <div class="next-event-name glitch" id="eventName" data-text="NEON PARTY">
+      NEON PARTY
     </div>
     <div class="next-event-date" id="eventDateDisplay">Date à définir</div>
+    <div class="next-event-venue">Cafétéria étudiante — Cégep Édouard-Montpetit · Longueuil</div>
     <p class="countdown-status" id="countdownStatus" aria-live="polite"></p>
+
+    <a class="next-event-poster" href="neon.png" target="_blank" rel="noopener" aria-label="Voir l'affiche de NEON PARTY">
+      <img src="neon.png" alt="Affiche NEON PARTY — 25 septembre 2026, Cégep Édouard-Montpetit, entrée gratuite pour les 50 premières personnes" loading="lazy" />
+    </a>
 
     <div class="countdown-grid">
       <div class="countdown-unit">
@@ -152,8 +156,8 @@
     </div>
 
     <div class="countdown-cta-wrap">
-      <a href="reglement.html" class="hero-cta hero-cta--filled">
-        Achète ton billet
+      <a href="#billets" class="hero-cta hero-cta--filled">
+        Réserve ton entrée
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <rect x="2" y="9" width="20" height="13" rx="1"/>
           <path d="M16 2v4M8 2v4M2 13h20"/>
@@ -162,21 +166,25 @@
     </div>
   </section>
 
-  <!-- ─── VIBES MARQUEE ─── -->
-  <!-- BILLETS -->
-  <!-- <section id="billets">
-    <div class="section-label">Billets</div>
-    <h2 class="section-title">ACHÈTE TON<br>BILLET</h2>
+  <!-- ─── BILLETS / ENTRÉE ─── -->
+  <section id="billets">
+    <div class="section-label">Entrée</div>
+    <h2 class="section-title">RÉSERVE TON<br>ENTRÉE</h2>
     <div class="section-divider"></div>
+
+    <p class="billets-note">
+      <strong>NEON PARTY</strong> — 25 septembre 2026, dès 19 h à la cafétéria étudiante du Cégep Édouard-Montpetit.
+      Entrée gratuite pour les 50 premières personnes et pour les étudiant·es d'Édouard-Montpetit (preuve requise).
+    </p>
 
     <div class="ticket-widget-wrap">
       <div
-        data-hievents-id="11"
-        data-hievents-primary-color="#a89368"
-        data-hievents-primary-text-color="#0e0e0e"
-        data-hievents-secondary-color="#1f1f1f"
-        data-hievents-secondary-text-color="#f5f2ec"
-        data-hievents-background-color="#f5f2ec"
+        data-hievents-id="10807"
+        data-hievents-primary-color="#ed0799ff"
+        data-hievents-primary-text-color="#000000"
+        data-hievents-secondary-color="#ffffffff"
+        data-hievents-secondary-text-color="#ffffff"
+        data-hievents-background-color="#ffffff"
         data-hievents-widget-type="widget"
         data-hievents-widget-version="1.0"
         data-hievents-locale="fr"
@@ -186,13 +194,14 @@
         class="hievents-widget"></div>
     </div>
     <div class="ticket-widget-fallback" id="ticketWidgetFallback">
-      <p>Si le module de billets reste en chargement, le service de billetterie ne répond probablement pas correctement. Réessaie dans quelques instants.</p>
-      <a href="https://billet.southevents.ca/checkout/11" target="_blank" rel="noopener" class="hero-cta hero-cta--filled">
-        Ouvrir l'achat direct
+      <p>Si le module de billetterie reste en chargement, le service ne répond probablement pas correctement. Réessaie dans quelques instants.</p>
+      <a href="https://billet.southevents.ca/event/10807" target="_blank" rel="noopener" class="hero-cta hero-cta--filled">
+        Ouvrir la billetterie
       </a>
     </div>
-  </section> -->
+  </section>
 
+  <!-- ─── VIBES MARQUEE ─── -->
   <div class="marquee-wrap" aria-hidden="true">
     <div class="marquee-track">
       <div class="marquee-set">
@@ -332,7 +341,7 @@
   </footer>
 
   <script defer src="https://billet.southevents.ca/widget.js"></script>
-  <script src="main.js?v=tickets-7"></script>
+  <script src="main.js?v=neon-1"></script>
 </body>
 </html>
 

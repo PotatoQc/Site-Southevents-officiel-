@@ -96,7 +96,8 @@ function initStats() {
 initStats()
 
 // ─── COUNTDOWN ────────────────────────────────
-const targetDate = new Date('2026-07-10T22:00:00-04:00')
+// NEON PARTY — 25 septembre 2026, 19 h (heure de l'Est), Cégep Édouard-Montpetit
+const targetDate = new Date('2026-09-25T19:00:00-04:00')
 
 const eventDateDisplay = document.getElementById('eventDateDisplay')
 const countdownStatus = document.getElementById('countdownStatus')
@@ -104,9 +105,10 @@ const countdownSection = document.getElementById('countdown')
 const ticketsSection = document.getElementById('billets')
 const ticketLinks = document.querySelectorAll('a[href="#billets"]')
 if (eventDateDisplay && targetDate) {
-  eventDateDisplay.textContent = targetDate.toLocaleDateString('fr-CA', {
+  const dateStr = targetDate.toLocaleDateString('fr-CA', {
     weekday: 'long', day: 'numeric', month: 'long', year: 'numeric', timeZone: 'America/Toronto'
   })
+  eventDateDisplay.textContent = `${dateStr} · 19 h à 2 h`
 }
 
 function pad(n) { return String(n).padStart(2, '0') }
