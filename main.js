@@ -178,7 +178,7 @@ function renderVideos() {
            <polygon points="5,3 19,12 5,21"/></svg></div></div>`
 
     return `
-      <div class="video-card fade-up">
+      <div class="video-card">
         <a href="${v.igUrl}" target="_blank" rel="noopener" aria-label="Voir ${v.title} sur Instagram">
           <div class="video-wrapper">
             ${media}
@@ -214,11 +214,6 @@ function renderVideos() {
       card.addEventListener('mouseleave', () => { vid.pause(); vid.currentTime = 0 })
     }
   })
-
-  requestAnimationFrame(() => {
-    grid.querySelectorAll('.fade-up').forEach((el, i) =>
-      setTimeout(() => el.classList.add('visible'), i * 120))
-  })
 }
 renderVideos()
 
@@ -237,10 +232,80 @@ function initTicketWidgetFallback() {
 }
 initTicketWidgetFallback()
 
-// ─── SCROLL REVEAL ────────────────────────────
-const observer = new IntersectionObserver(entries => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) entry.target.classList.add('visible')
+// ─── ANIMATIONS AU DÉFILEMENT ─────────────────
+// Zoom flou à l'apparition (rejoué en descendant et en remontant), parallaxe,
+// barre de progression et menu masqué en descendant.
+function initScrollEffects() {
+  const root = document.documentElement
+  const nav = document.querySelector('nav')
+  const hero = document.getElementById('hero')
+  const progressBar = document.querySelector('.scroll-progress')
+  const motion = !prefersReducedMotion()
+
+  const REVEAL = [
+    '.stat-item', '.next-event-tag', '.next-event-name', '.next-event-subtitle', '.next-event-date',
+    '.next-event-venue', '.next-event-poster', '.countdown-unit', '.countdown-cta-wrap',
+    '.section-label', '.section-title', '.section-divider', '.billets-note', '.ticket-widget-wrap',
+    '.merch-intro', '.merch-card', '.video-card', 'footer > *',
+  ].join(',')
+  const revealEls = motion ? [...document.querySelectorAll(REVEAL)] : []
+  revealEls.forEach(el => {
+    el.classList.add('sa')
+    // Cascade entre éléments frères (cartes, compteurs, stats…)
+    const siblings = [...el.parentElement.children].filter(child => child.matches(REVEAL))
+    el.style.setProperty('--i', Math.min(siblings.indexOf(el), 6))
   })
-}, { threshold: 0.12 })
-document.querySelectorAll('.fade-up').forEach(el => observer.observe(el))
+
+  // [sélecteur, vitesse] — les éléments du hero suivent le défilement, les autres
+  // se décalent selon leur distance au centre de l'écran.
+  const parallaxEls = motion ? [
+    ['.hero-content', -0.35], ['.hero-logo-center', 0.25], ['#countdown', 0.12],
+    ['.next-event-poster', -0.06], ['.section-title', -0.08],
+  ].flatMap(([sel, speed]) => [...document.querySelectorAll(sel)].map(el => {
+    el.dataset.parallax = speed
+    return el
+  })) : []
+
+  // Position calculée à la main : IntersectionObserver tient compte du clip-path /
+  // de la transformation de l'élément et peut le laisser caché.
+  function updateReveal(vh) {
+    revealEls.forEach(el => {
+      const r = el.getBoundingClientRect()
+      el.classList.toggle('in', r.top < vh - 40 && r.bottom > 40)
+    })
+  }
+
+  let lastY = window.scrollY
+  let ticking = false
+  function update() {
+    const y = window.scrollY
+    const vh = window.innerHeight
+    if (nav && Math.abs(y - lastY) > 2) nav.classList.toggle('nav-hidden', y > lastY && y > 120)
+    lastY = y
+
+    if (progressBar) {
+      const max = root.scrollHeight - vh
+      progressBar.style.transform = `scaleX(${max > 0 ? (y / max).toFixed(4) : 0})`
+    }
+    parallaxEls.forEach(el => {
+      const speed = Number(el.dataset.parallax)
+      if (el.closest('#hero')) {
+        el.style.setProperty('--py', `${(y * -speed).toFixed(1)}px`)
+      } else {
+        const r = el.getBoundingClientRect()
+        el.style.setProperty('--py', `${((r.top + r.height / 2 - vh / 2) * speed).toFixed(1)}px`)
+      }
+    })
+    if (motion && hero) root.style.setProperty('--hero-fade', Math.max(0, 1 - y / (hero.offsetHeight * 0.7)).toFixed(3))
+    updateReveal(vh) // après la parallaxe, qui déplace certains éléments
+    ticking = false
+  }
+
+  function requestUpdate() {
+    if (!ticking) { ticking = true; requestAnimationFrame(update) }
+  }
+  window.addEventListener('scroll', requestUpdate, { passive: true })
+  window.addEventListener('resize', requestUpdate)
+  update()
+}
+initScrollEffects()

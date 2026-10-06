@@ -1328,13 +1328,41 @@ footer p {
   93% { transform: none; opacity:0; }
 }
 
-/* ─── SCROLL FADE ─── */
-.fade-up {
-  opacity: 0;
-  transform: translateY(24px);
-  transition: opacity 0.7s ease, transform 0.7s ease;
+/* ─── ANIMATIONS AU DÉFILEMENT ─── */
+/* main.js ajoute .sa aux éléments animés et .in quand ils sont à l'écran
+   (rien n'est masqué sans JavaScript ni si l'animation réduite est demandée). */
+.sa {
+  transition:
+    opacity 0.8s cubic-bezier(.2,.7,.2,1),
+    transform 0.8s cubic-bezier(.2,.7,.2,1),
+    filter 0.8s ease;
+  transition-delay: calc(var(--i, 0) * 90ms);
 }
-.fade-up.visible { opacity: 1; transform: translateY(0); }
+.sa:not(.in) {
+  opacity: 0;
+  transform: scale(0.88);
+  filter: blur(12px);
+}
+
+/* Parallaxe : --py est calculé par main.js ; `translate` se combine aux transform existants */
+[data-parallax] { translate: 0 var(--py, 0px); }
+#countdown::after { translate: 0 var(--py, 0px); }
+.hero-content { opacity: var(--hero-fade, 1); }
+
+/* Barre de progression */
+.scroll-progress {
+  position: fixed; top: 0; left: 0; right: 0;
+  height: 3px;
+  z-index: 300;
+  background: var(--hw, var(--white));
+  transform: scaleX(0);
+  transform-origin: left;
+  pointer-events: none;
+}
+
+/* Menu masqué en descendant, réapparaît en remontant */
+nav { transition: transform 0.35s ease; }
+nav.nav-hidden { transform: translateY(-100%); }
 
 /* ─── RESPONSIVE ─── */
 @media (max-width: 900px) {
