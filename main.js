@@ -31,6 +31,14 @@ function initParticles() {
   const canvas = document.getElementById('particles')
   if (!canvas || prefersReducedMotion()) return
   const ctx = canvas.getContext('2d')
+  // Couleur lue depuis la CSS (--particle-rgb) pour suivre le thème actif.
+  let particleRgb = '245,242,236'
+  function readParticleColor() {
+    const value = getComputedStyle(document.documentElement).getPropertyValue('--particle-rgb').trim()
+    if (value) particleRgb = value
+  }
+  readParticleColor()
+  document.addEventListener('se:themechange', readParticleColor)
   function resize() {
     const hero = canvas.parentElement
     canvas.width = hero.offsetWidth || window.innerWidth
@@ -59,7 +67,7 @@ function initParticles() {
       if (p.x > canvas.width + 5) p.x = -5
       ctx.beginPath()
       ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2)
-      ctx.fillStyle = `rgba(245,242,236,${p.op})`
+      ctx.fillStyle = `rgba(${particleRgb},${p.op})`
       ctx.fill()
     })
     requestAnimationFrame(drawParticles)
@@ -96,8 +104,9 @@ function initStats() {
 initStats()
 
 // ─── COUNTDOWN ────────────────────────────────
-// NEON PARTY — 25 septembre 2026, 19 h (heure de l'Est), Cégep Édouard-Montpetit
-const targetDate = new Date('2026-09-25T19:00:00-04:00')
+// HALLOWEEN PARTY COSTUMÉ — 30 octobre 2026, 21 h (heure de l'Est), Cégep Édouard-Montpetit
+const targetDate = new Date('2026-10-30T21:00:00-04:00')
+const eventHoursLabel = '21 h à 3 h'
 
 const eventDateDisplay = document.getElementById('eventDateDisplay')
 const countdownStatus = document.getElementById('countdownStatus')
@@ -107,7 +116,7 @@ const ticketLinks = document.querySelectorAll('a[href="#billets"]')
 if (eventDateDisplay && targetDate) {
   eventDateDisplay.textContent = targetDate.toLocaleDateString('fr-CA', {
     weekday: 'long', day: 'numeric', month: 'long', year: 'numeric', timeZone: 'America/Toronto'
-  }) + ' · 19 h à 2 h'
+  }) + ' · ' + eventHoursLabel
 }
 
 function pad(n) { return String(n).padStart(2, '0') }
@@ -194,9 +203,13 @@ function renderVideos() {
     const vid = card.querySelector('.card-preview-video')
     if (!vid) return
     if (touch) {
-      vid.play()
+      // Sur mobile : lecture seulement quand la carte est visible (économise données et batterie).
+      new IntersectionObserver(([entry]) => {
+        if (entry.isIntersecting) vid.play().catch(() => {})
+        else vid.pause()
+      }, { threshold: 0.25 }).observe(card)
     } else {
-      card.addEventListener('mouseenter', () => vid.play())
+      card.addEventListener('mouseenter', () => vid.play().catch(() => {}))
       card.addEventListener('mouseleave', () => { vid.pause(); vid.currentTime = 0 })
     }
   })

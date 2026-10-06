@@ -6,7 +6,13 @@
   <meta name="description" content="Commande un chandail Southevents et indique tes grandeurs pour chaque unité." />
   <meta name="theme-color" content="#0e0e0e" />
   <title>Commande merch | SOUTHEVENTS</title>
-  <link rel="stylesheet" href="style.css?v=neon-7" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  <link rel="icon" type="image/png" href="logo.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&amp;family=Space+Mono:ital,wght@0,400;0,700;1,400&amp;family=DM+Sans:wght@300;400;500&amp;display=swap" />
+  <link rel="stylesheet" href="style.css?v=hw-2" />
+  <script src="theme.js?v=hw-2"></script>
 </head>
 <body>
   <div class="cursor" id="cursor"></div>
@@ -31,17 +37,17 @@
       <aside class="order-preview">
         <div class="order-design-pair">
           <div class="merch-image-wrap">
-            <img src="merch-front.png" alt="Devant du chandail Southevents" onerror="this.style.display='none'" />
+            <img src="merch-front.webp" width="800" height="800" alt="Devant du chandail Southevents" onerror="this.style.display='none'" />
             <div class="merch-image-fallback">
               <span>Devant</span>
             </div>
             <span class="merch-side-label">Devant</span>
           </div>
           <div class="merch-image-wrap">
-            <img id="orderDesignImage" src="design1.png" alt="Design sélectionné" onerror="this.style.display='none'" />
+            <img id="orderDesignImage" src="design1.webp" width="800" height="800" alt="Design sélectionné" onerror="this.style.display='none'" />
             <div class="merch-image-fallback">
               <span id="orderDesignFallback">Design 01</span>
-              <small id="orderDesignFilename">design1.png</small>
+              <small id="orderDesignFilename">design1.webp</small>
             </div>
             <span class="merch-side-label">Design</span>
           </div>
@@ -71,7 +77,7 @@
         <form id="merchOrderForm">
           <div class="form-group">
             <label for="fullNameInput">Nom complet</label>
-            <input id="fullNameInput" name="fullName" type="text" placeholder="Ex: Alex Tremblay" required />
+            <input id="fullNameInput" name="fullName" type="text" placeholder="Ex: Alex Tremblay" autocomplete="name" maxlength="100" required />
           </div>
 
           <div class="form-group">
@@ -95,18 +101,18 @@
 
           <div class="form-group order-address-group" id="addressGroup" hidden>
             <label for="addressInput">Adresse complète de livraison</label>
-            <textarea id="addressInput" name="address" placeholder="Numéro civique, rue, appartement, ville, code postal"></textarea>
+            <textarea id="addressInput" name="address" autocomplete="street-address" maxlength="400" placeholder="Numéro civique, rue, appartement, ville, code postal"></textarea>
           </div>
 
           <div class="form-group">
             <label for="contactInput">Téléphone, Instagram ou courriel</label>
-            <input id="contactInput" name="contact" type="text" placeholder="Ex: 514-000-0000, @tonig ou nom@email.com" required />
+            <input id="contactInput" name="contact" type="text" placeholder="Ex: 514-000-0000, @tonig ou nom@email.com" maxlength="150" required />
             <p class="form-help">Cette info sert uniquement à te rejoindre pour confirmer la commande.</p>
           </div>
 
           <div class="form-group">
             <label for="noteInput">Note</label>
-            <textarea id="noteInput" name="note" placeholder="Optionnel: détails utiles pour te contacter"></textarea>
+            <textarea id="noteInput" name="note" maxlength="800" placeholder="Optionnel: détails utiles pour te contacter"></textarea>
           </div>
 
           <div class="payment-instructions">
@@ -145,7 +151,7 @@
     </div>
   </div>
 
-  <script src="main.js?v=neon-7"></script>
-  <script src="merch-order.js?v=merch-7"></script>
+  <script src="main.js?v=hw-4"></script>
+  <script src="merch-order.js?v=merch-9"></script>
 </body>
 </html>

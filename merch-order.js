@@ -1,19 +1,19 @@
 const PRICE_PER_SHIRT = 50
-const INTERAC_EMAIL = 'sevirements@southevents.ca'
+const INTERAC_EMAIL = 'merch@southevents.ca'
 const ORDER_NOTIFICATION_ENDPOINT = 'https://discord.com/api/webhooks/1514018361917309029/0a26KLuz5BzkGINgLGYKkdAzKfYUSdL_-MRIzbVj-S0NOPBo7OI9loK6eiNTYjLzkSd2'
 
 const designs = {
   'design-1': {
     label: 'Design 01',
-    image: 'design1.png',
+    image: 'design1.webp',
   },
   'design-2': {
     label: 'Design 02',
-    image: 'design2.png',
+    image: 'design2.webp',
   },
   'design-3': {
     label: 'Design 03',
-    image: 'design3.png',
+    image: 'design3.webp',
   },
 }
 
@@ -64,6 +64,13 @@ function normalizedQuantity() {
   const value = Number.parseInt(quantityInput.value, 10)
   if (Number.isNaN(value) || value < 1) return 1
   return Math.min(value, 20)
+}
+
+// Discord refuse un champ d'embed vide ou de plus de 1024 caractères :
+// on borne chaque valeur pour que la commande ne soit jamais rejetée.
+function field(value, fallback = '-') {
+  const text = String(value || '').trim() || fallback
+  return text.length > 1024 ? `${text.slice(0, 1021)}...` : text
 }
 
 function generateOrderNumber() {
@@ -188,19 +195,21 @@ async function sendOrderNotification(order) {
 
   const discordPayload = {
     content: `<@480164876107513867> Nouvelle commande merch Southevents - ${order.orderNumber}`,
+    // Seule la mention voulue peut notifier : un client ne peut pas déclencher @everyone.
+    allowed_mentions: { parse: [], users: ['480164876107513867'] },
     embeds: [{
-      title: order.designSummary,
+      title: field(order.designSummary).slice(0, 256),
       color: 0xf5f2ec,
       fields: [
         { name: 'Numero de commande', value: order.orderNumber, inline: false },
-        { name: 'Nom complet', value: order.fullName, inline: false },
+        { name: 'Nom complet', value: field(order.fullName), inline: false },
         { name: 'Quantite', value: String(order.quantity), inline: true },
         { name: 'Total', value: money(order.total), inline: true },
-        { name: 'Chandails', value: itemText, inline: false },
-        { name: 'Livraison / ramassage', value: deliveryText, inline: false },
-        { name: 'Contact', value: order.contact || 'Non precise', inline: false },
+        { name: 'Chandails', value: field(itemText), inline: false },
+        { name: 'Livraison / ramassage', value: field(deliveryText), inline: false },
+        { name: 'Contact', value: field(order.contact, 'Non precise'), inline: false },
         { name: 'Virement Interac', value: `${INTERAC_EMAIL} - requis pour traiter la commande`, inline: false },
-        { name: 'Note', value: order.note || 'Aucune note', inline: false },
+        { name: 'Note', value: field(order.note, 'Aucune note'), inline: false },
       ],
       timestamp: order.createdAt,
     }],
