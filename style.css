@@ -1275,6 +1275,16 @@ footer {
   text-transform: uppercase;
   color: var(--white-dim);
 }
+.footer-ig {
+  display: inline-flex; align-items: center; gap: 0.6rem;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.15em;
+  color: var(--white-dim);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.footer-ig:hover { color: var(--white); }
 footer p {
   font-family: 'Space Mono', monospace;
   font-size: 0.55rem;
