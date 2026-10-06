@@ -154,6 +154,8 @@ if (countdownSection) {
 
 // ─── VIDEO GALLERY ────────────────────────────
 let videos = [
+  // Pas encore de reel pour NEON : lien vers le profil Instagram en attendant.
+  { title: 'Neon Party', date: '25 Septembre 2026', igUrl: 'https://www.instagram.com/south_events/', preview: '25sept.mp4' },
   { title: 'ThrowBack 2010', date: '3 Avril 2026', igUrl: 'https://www.instagram.com/reel/DW4Ij6kDSlS/', preview: 'tb2010.mp4' },
   { title: 'ThrowBack 2016', date: '6 Mars 2026', igUrl: 'https://www.instagram.com/reel/DVq2r23jUnn/', preview: 'tb2016.mp4' },
   { title: 'Red Euphoria', date: '19 Juin 2026', igUrl: 'https://www.instagram.com/reel/DVq2r23jUnn/', preview: 'red_euphoria.mp4' },
